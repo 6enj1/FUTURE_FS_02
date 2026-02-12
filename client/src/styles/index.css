@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-feature-settings: "ss01", "ss02", "cv01", "cv03";
+}
+
+@layer base {
+  body {
+    @apply bg-page text-gray-900 antialiased;
+  }
+
+  ::selection {
+    @apply bg-teal-100 text-teal-900;
+  }
+}
+
+@layer components {
+  .input {
+    @apply block w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-800
+      placeholder:text-gray-400 outline-none transition-all
+      hover:border-gray-300 focus:border-teal-500 focus:ring-1 focus:ring-teal-500/20;
+  }
+
+  .label {
+    @apply block text-xs font-medium text-gray-500 mb-1.5;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-lg text-sm font-medium
+      transition-all active:scale-[0.98] disabled:opacity-40 disabled:pointer-events-none;
+  }
+
+  .btn-dark {
+    @apply btn h-9 px-4 bg-gray-900 text-white shadow-low hover:bg-gray-800;
+  }
+
+  .btn-outline {
+    @apply btn h-9 px-4 border border-gray-200 bg-white text-gray-700 shadow-low hover:bg-gray-50 hover:border-gray-300;
+  }
+
+  .btn-sm {
+    @apply btn h-7 px-2.5 text-xs;
+  }
+
+  .card {
+    @apply bg-white rounded-xl border border-gray-200/70 shadow-low;
+  }
+}

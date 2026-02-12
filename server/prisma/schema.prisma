@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+
+  @@map("users")
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  CONVERTED
+}
+
+model Lead {
+  id              String     @id @default(uuid())
+  name            String
+  email           String
+  phone           String?
+  source          String     @default("Website Contact Form")
+  status          LeadStatus @default(NEW)
+  lastContactedAt DateTime?
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  notes    Note[]
+  followUps FollowUp[]
+
+  @@map("leads")
+}
+
+model Note {
+  id        String   @id @default(uuid())
+  leadId    String
+  body      String   @db.Text
+  createdAt DateTime @default(now())
+
+  lead Lead @relation(fields: [leadId], references: [id], onDelete: Cascade)
+
+  @@map("notes")
+}
+
+model FollowUp {
+  id          String    @id @default(uuid())
+  leadId      String
+  dueAt       DateTime
+  note        String?   @db.Text
+  completedAt DateTime?
+  createdAt   DateTime  @default(now())
+
+  lead Lead @relation(fields: [leadId], references: [id], onDelete: Cascade)
+
+  @@map("follow_ups")
+}
